@@ -18,13 +18,13 @@ Chat with Qwen3.5-4B on a Mac while steering individual MLP neurons to give it a
 At the input of layer $L$'s `down_proj`, neuron $n$'s activation $a_n$ gets an offset at every token position:
 
 ```math
-\Delta a_n = \text{dose} \times \frac{\operatorname{median}_{t \ge 1} \lVert h^{(L)}_t \rVert}{\lVert W_{\text{down}}[:, n] \rVert}
+\Delta a_n = \text{dose} \times \frac{\mathrm{median}_{t \ge 1} \lVert h^{(L)}_t \rVert}{\lVert W_{\text{down}}[:, n] \rVert}
 ```
 
 - $h^{(L)}_t$ is the residual stream leaving layer $L$ at token $t$. The first token ($t = 0$) is skipped.
 - $W_{\text{down}}[:, n]$ is the column of the `down_proj` weight that neuron $n$ writes to the residual stream.
 
-So the vector added to the residual stream has length $\text{dose} \times \operatorname{median} \lVert h^{(L)} \rVert$. The median is recomputed each turn on the current input, without steering.
+So the vector added to the residual stream has length $\text{dose} \times \mathrm{median} \lVert h^{(L)} \rVert$. The median is recomputed each turn on the current input, without steering.
 
 ## Setup
 
